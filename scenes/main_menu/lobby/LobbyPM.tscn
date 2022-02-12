@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/main_menu/lobby/LobbyPM.cs" type="Script" id=1]
+
+[node name="LobbyPM" type="Node"]
+script = ExtResource( 1 )

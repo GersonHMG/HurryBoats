@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/qkey.ogg-fdc80af22140106aa72ff6528b600b01.oggstr"
+
+[deps]
+
+source_file="res://audio/weapons/qkey.ogg"
+dest_files=[ "res://.import/qkey.ogg-fdc80af22140106aa72ff6528b600b01.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

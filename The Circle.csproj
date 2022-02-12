@@ -1,0 +1,16 @@
+<Project Sdk="Godot.NET.Sdk/3.3.0">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>TheCircle</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Steamworks">
+      <HintPath>Steamworks.NET.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="FlatBuffers">
+      <HintPath>FlatBuffers.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

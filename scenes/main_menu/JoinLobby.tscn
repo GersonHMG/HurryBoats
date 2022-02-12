@@ -1,0 +1,174 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/main_menu/JoinLobby.cs" type="Script" id=1]
+[ext_resource path="res://fonts/circle_title.tres" type="DynamicFont" id=2]
+[ext_resource path="res://scenes/main_menu/loading_circle.png" type="Texture" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "connecting"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 47 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "Connecting", "Connecting.", "Connecting..", "Connecting..." ]
+}
+
+[node name="JoinLobby" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0.00392157, 0.278431, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -303.0
+margin_top = -48.5
+margin_right = 303.0
+margin_bottom = 48.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 606.0
+margin_bottom = 73.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_right = 302.0
+margin_bottom = 73.0
+custom_fonts/font = ExtResource( 2 )
+text = "JoinLobby"
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/HBoxContainer"]
+margin_left = 306.0
+margin_right = 606.0
+margin_bottom = 73.0
+rect_min_size = Vector2( 300, 0 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 77.0
+margin_right = 606.0
+margin_bottom = 97.0
+
+[node name="ToMenu" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_right = 301.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "To Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Join" type="Button" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 305.0
+margin_right = 606.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Join"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Waiting" type="ColorRect" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -960.0
+margin_top = -157.5
+margin_right = 960.0
+margin_bottom = 157.5
+color = Color( 1, 1, 1, 0.145098 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Waiting"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -198.0
+margin_top = 52.5
+margin_right = 198.0
+margin_bottom = 125.5
+custom_fonts/font = ExtResource( 2 )
+text = "Connecting"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Waiting"]
+position = Vector2( 956, 110.5 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+hframes = 12
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Waiting"]
+autoplay = "connecting"
+anims/connecting = SubResource( 1 )
+
+[node name="ConnectionFailedPopUp" type="WindowDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -188.5
+margin_top = -43.5
+margin_right = 188.5
+margin_bottom = 43.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ConnectionFailedPopUp"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -59.0
+margin_top = -7.0
+margin_right = 59.0
+margin_bottom = 7.0
+text = "Connection Failed."
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/ToMenu" to="." method="_OnToMenuPressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Join" to="." method="_OnJoinPressed"]

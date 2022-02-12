@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/map/land.png" type="Texture" id=1]
+[ext_resource path="res://scenes/map/LandPiece.cs" type="Script" id=2]
+
+[node name="LandPiece" type="StaticBody2D" groups=["land"]]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+rotation = 1.5708
+scale = Vector2( 0.535128, 0.535128 )
+texture = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 0, -66, -57, -34, -58, 32, 1, 68, 59, 33, 59, -30 )

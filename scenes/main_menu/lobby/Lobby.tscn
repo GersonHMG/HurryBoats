@@ -1,0 +1,118 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://fonts/circle_title.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/main_menu/lobby/Lobby.cs" type="Script" id=3]
+[ext_resource path="res://scenes/main_menu/lobby/lobby_background.jpg" type="Texture" id=4]
+[ext_resource path="res://fonts/Medium-FranklingGothic.tres" type="DynamicFont" id=5]
+[ext_resource path="res://fonts/Small-FranklingGothic.tres" type="DynamicFont" id=6]
+[ext_resource path="res://audio/lobby/lobby_song.mp3" type="AudioStream" id=7]
+
+[node name="Lobby" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackGround" type="TextureRect" parent="."]
+modulate = Color( 0.101961, 0, 0.227451, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background2" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -467.0
+margin_top = -540.0
+margin_right = 467.0
+margin_bottom = 540.0
+color = Color( 0.0745098, 0, 0.184314, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -148.0
+margin_top = 27.0
+margin_right = 148.0
+margin_bottom = 100.0
+custom_fonts/font = ExtResource( 1 )
+text = "Lobby"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayersContainer" type="VBoxContainer" parent="."]
+margin_left = 614.0
+margin_top = 162.0
+margin_right = 1323.0
+margin_bottom = 884.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="."]
+margin_left = 1160.0
+margin_top = 941.0
+margin_right = 1364.0
+margin_bottom = 1017.0
+custom_fonts/font = ExtResource( 5 )
+text = "Exit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartGame" type="Button" parent="."]
+margin_left = 555.0
+margin_top = 937.0
+margin_right = 755.0
+margin_bottom = 1010.0
+custom_fonts/font = ExtResource( 5 )
+text = "Start Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -932.0
+margin_top = 40.0
+margin_right = -766.0
+margin_bottom = 81.0
+custom_fonts/font = ExtResource( 5 )
+text = "lobby id"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LobbyID" type="TextEdit" parent="."]
+margin_left = 28.0
+margin_top = 85.0
+margin_right = 444.0
+margin_bottom = 105.0
+custom_fonts/font = ExtResource( 6 )
+readonly = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WaitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -15.0
+autoplay = true
+
+[connection signal="pressed" from="Exit" to="." method="_OnExitPressed"]
+[connection signal="pressed" from="StartGame" to="." method="_OnStartGamePressed"]

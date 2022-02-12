@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=2]
+
+[sub_resource type="StreamTexture" id=6]
+flags = 4
+load_path = "res://.import/long_button.png-1babc46ca0b0928d7a6582a5f6e7bb74.stex"
+
+[resource]
+texture = SubResource( 6 )
+region_rect = Rect2( 0, 0, 242, 59 )
+modulate_color = Color( 0, 0.819608, 0.427451, 1 )

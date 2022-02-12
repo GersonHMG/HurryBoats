@@ -1,0 +1,45 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Personal\\GodotProyects\\TheCircle\\The Circle.csproj": {}
+  },
+  "projects": {
+    "D:\\Personal\\GodotProyects\\TheCircle\\The Circle.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Personal\\GodotProyects\\TheCircle\\The Circle.csproj",
+        "projectName": "The Circle",
+        "projectPath": "D:\\Personal\\GodotProyects\\TheCircle\\The Circle.csproj",
+        "packagesPath": "C:\\Users\\Gerso\\.nuget\\packages\\",
+        "outputPath": "D:\\Personal\\GodotProyects\\TheCircle\\.mono\\temp\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Gerso\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

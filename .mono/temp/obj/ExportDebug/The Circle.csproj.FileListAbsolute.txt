@@ -1,0 +1,9 @@
+D:\Personal\GodotProyects\TheCircle\.mono\temp\bin\ExportDebug\The Circle.dll
+D:\Personal\GodotProyects\TheCircle\.mono\temp\bin\ExportDebug\The Circle.pdb
+D:\Personal\GodotProyects\TheCircle\.mono\temp\obj\ExportDebug\The Circle.csproj.AssemblyReference.cache
+D:\Personal\GodotProyects\TheCircle\.mono\temp\obj\ExportDebug\The Circle.GeneratedMSBuildEditorConfig.editorconfig
+D:\Personal\GodotProyects\TheCircle\.mono\temp\obj\ExportDebug\The Circle.AssemblyInfoInputs.cache
+D:\Personal\GodotProyects\TheCircle\.mono\temp\obj\ExportDebug\The Circle.AssemblyInfo.cs
+D:\Personal\GodotProyects\TheCircle\.mono\temp\obj\ExportDebug\The Circle.csproj.CoreCompileInputs.cache
+D:\Personal\GodotProyects\TheCircle\.mono\temp\obj\ExportDebug\The Circle.dll
+D:\Personal\GodotProyects\TheCircle\.mono\temp\obj\ExportDebug\The Circle.pdb
