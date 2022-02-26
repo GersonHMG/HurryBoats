@@ -17,4 +17,9 @@ public class PlayerLobbyInfo : HBoxContainer
     }
 
 
+    public void SetStatusReady(){
+        GetNode<Label>("Status").Text = "Ready";
+        GetNode<Label>("Status").AddColorOverride("font_color",Colors.Green);
+    }
+
 }

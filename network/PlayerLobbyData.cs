@@ -5,15 +5,16 @@ using Steamworks;
 
 public class PlayerLobbyData{
 
-    enum States : ushort{
+    public enum CONNECTION_STATE : byte{
         READY,
-        JOINING
+        JOINING,
+        DISCONNECTED
     }
 
     string player_name;
     CSteamID steam_id;
     ushort player_id;
-    ushort player_state = (ushort) States.JOINING;
+    byte player_connection_state = (byte) CONNECTION_STATE.JOINING;
     ImageTexture player_avatar;
 
 
@@ -24,6 +25,7 @@ public class PlayerLobbyData{
         player_name = SteamFriends.GetFriendPersonaName(_steam_id);
         SetPlayerImage();
     }
+
 
     public ImageTexture GetPlayerAvatar() => player_avatar;
 
@@ -59,9 +61,19 @@ public class PlayerLobbyData{
 
     public string GetPlayerName() => player_name;
 
+
     public CSteamID GetSteamID() => steam_id;
 
+
     public ushort GetPlayerID() => player_id;
+
+
+    public CONNECTION_STATE GetPlayerConnectionStatus() => (CONNECTION_STATE) player_connection_state;
+
+
+    public void SetPlayerConnectionStatus(CONNECTION_STATE state){
+        player_connection_state = (byte) state;
+    }
 
 
 }

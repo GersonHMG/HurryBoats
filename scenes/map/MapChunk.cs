@@ -43,7 +43,7 @@ public class MapChunk : Node2D{
 
 
     public void GenerateRandomChunk(int seed){
-        GD.Print(" seed is: " + seed.ToString() );
+        GD.Print("random chunk seed is: " + seed.ToString() );
         Random rnd = new Random(seed);
         List<Vector2> grid = GetGrid();
         int grid_size = GRID_SIZE_X*GRID_SIZE_Y;

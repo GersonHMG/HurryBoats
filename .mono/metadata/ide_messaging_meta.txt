@@ -1,2 +1,0 @@
-﻿54698
-D:/Programs/GodotMono342/Godot_v3.4.2-stable_mono_win64.exe

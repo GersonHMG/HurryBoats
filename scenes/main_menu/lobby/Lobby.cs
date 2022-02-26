@@ -11,6 +11,7 @@ public class Lobby : Control{
     VBoxContainer players_container;
     PackedScene PLAYER_LABEL_INFO;
     Dictionary<CSteamID, HBoxContainer> playerid_and_label = new Dictionary<CSteamID, HBoxContainer>();
+    bool player_ready = false;
 
     public override void _Ready(){
         scene_changer = GetNode<SceneChanger>("/root/SceneChanger");
@@ -20,15 +21,20 @@ public class Lobby : Control{
         PLAYER_LABEL_INFO = (PackedScene)ResourceLoader.Load("res://scenes/main_menu/lobby/PlayerLobbyInfo.tscn");
         lobby_manager.Connect("PlayersUpdate", this, nameof(OnPlayersUpdate) );
         GetNode<TextEdit>("LobbyID").Text = ( (ulong) lobby_manager.GetLobbyID() ).ToString();
-        GeneratePlayers();
         if(!lobby_manager.ImHost()){
             lobbyPM.SendRequestPlayers( SteamUser.GetSteamID() );
             GetNode<Button>("StartGame").Visible = false;
+        }else{
+            GeneratePlayers();
         }
     }
 
     
     void GeneratePlayers(){
+        if(!player_ready){
+            lobbyPM.SendPlayerReady(lobby_manager.GetMySteamID());
+        }
+        player_ready = true;
         // Remove each player from container
         foreach( Node player in players_container.GetChildren()){
             player.QueueFree(); 
@@ -43,6 +49,9 @@ public class Lobby : Control{
             new_player_label.SetPlayerName( player.GetPlayerName() );
             new_player_label.SetAvatar( player.GetPlayerAvatar() );
             playerid_and_label.Add( player.GetSteamID() ,new_player_label);
+            if(player.GetPlayerConnectionStatus() == (byte) PlayerLobbyData.CONNECTION_STATE.READY){
+                new_player_label.SetStatusReady();
+            }
         }
     }
 

@@ -112,7 +112,6 @@ __meta__ = {
 [node name="WaitSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 volume_db = -15.0
-autoplay = true
 
 [connection signal="pressed" from="Exit" to="." method="_OnExitPressed"]
 [connection signal="pressed" from="StartGame" to="." method="_OnStartGamePressed"]

@@ -60,6 +60,7 @@ public class LobbyManager : Node{
         if (lobby.m_eResult == EResult.k_EResultOK){
             lobby_id = (CSteamID) lobby.m_ulSteamIDLobby;
             host_data = RegisterPlayer( SteamUser.GetSteamID(), 0 );
+            host_data.SetPlayerConnectionStatus( PlayerLobbyData.CONNECTION_STATE.READY);
             my_data = host_data;
             is_host = true;
             GD.Print("Lobby created succesfully.");
@@ -77,11 +78,11 @@ public class LobbyManager : Node{
         if(temp_host_id != new CSteamID()){
             GD.Print("Lobby Entered.");
             lobby_id = (CSteamID) entrance.m_ulSteamIDLobby;
-            if(!ImHost())
+            if(!ImHost()){
                 host_data = RegisterPlayer(temp_host_id, 0);
-            PrintLobbyInfo();
-            if(!ImHost())
                 lobbyPM.SendStartP2PConnection();
+            }
+            PrintLobbyInfo();
             EmitSignal(nameof(LobbyJoinedResult), true);
         }
         else{
@@ -143,6 +144,12 @@ public class LobbyManager : Node{
         SteamMatchmaking.JoinLobby(join_id);
     }
 
+    
+    public void SetPlayerConnectionReady(CSteamID steam_id){
+        playerdata_by_steamid[steam_id].SetPlayerConnectionStatus(PlayerLobbyData.CONNECTION_STATE.READY);
+        EmitSignal( nameof(PlayersUpdate) );
+    }
+
 
     void ResetLobbyParameters(){
         is_host = false;
@@ -181,7 +188,7 @@ public class LobbyManager : Node{
 
     public CSteamID GetHostSteamID() => host_data.GetSteamID();
 
-    // DELETE THIS METHOD
+
     public CSteamID GetMySteamID() => my_data.GetSteamID();
 
 
@@ -204,14 +211,14 @@ public class LobbyManager : Node{
         return false;
     }
 
-    public void SetPlayersData(Dictionary<CSteamID, ushort> new_data){
-        GD.Print("Setting Players");
+
+    public void SetPlayersData(List<PlayerLobbyData> new_players){
         playerdata_by_steamid.Clear();
-        foreach(CSteamID id in new_data.Keys){
-            
-            RegisterPlayer(id, new_data[id]);
+        foreach(PlayerLobbyData player in new_players){
+            playerdata_by_steamid.Add(player.GetSteamID(), player);
         }
-        my_data = playerdata_by_steamid[SteamUser.GetSteamID() ];
+        my_data = playerdata_by_steamid[ SteamUser.GetSteamID() ];
+        EmitSignal( nameof(PlayersUpdate) );
     }
 
 

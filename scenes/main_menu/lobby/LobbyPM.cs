@@ -17,10 +17,11 @@ public class LobbyPM : PacketManager{
         RECEIVE_PLAYERS,
         PLAYERS_REQUESTER,
         START_GAME,
-        REGISTER_PLAYER
+        REGISTER_PLAYER,
+        PLAYER_LOBBY_READY
     }
 
-        // ------------ Receivers (Deserialize)
+
     public override void ReceivePacket(byte[] incoming_packet){
         ByteBuffer buffer = new ByteBuffer(GetPacketBody(incoming_packet));
         METHODS_ID method_id = (METHODS_ID) GetMethodID(incoming_packet);
@@ -40,12 +41,14 @@ public class LobbyPM : PacketManager{
             case METHODS_ID.REGISTER_PLAYER:
                 ReceiveRegisterPlayer(buffer);
                 break;
-
+            case METHODS_ID.PLAYER_LOBBY_READY:
+                ReceivePlayerReady(buffer);
+                break;
         }
     }
 
 
-    // Trigger OnP2PSessionRequest (Host) when is succesfully received
+    // Trigger OnP2PSessionRequest in lobbymanager (Host) when is succesfully received
     public void SendStartP2PConnection(){
         byte[] packet = AssemblyPacket( (byte) METHODS_ID.INIT_CONNECTION, new byte[0]);
         network.SendReliableToID(packet, lobby_manager.GetHostSteamID());
@@ -63,25 +66,23 @@ public class LobbyPM : PacketManager{
     }
 
 
-    // NEW FEATURE
-    public void SendPlayers(Dictionary<CSteamID,ushort> players, CSteamID to_id){
+    public void SendPlayers(List<PlayerLobbyData> players, CSteamID to_id){
         FlatBufferBuilder builder = new FlatBufferBuilder(8);
-        int dict_size = players.Keys.Count;
-        Offset<PlayersData>[] list = new Offset<PlayersData>[dict_size];
+        int data_size = players.Count;
+        Offset<PlayerData>[] list = new Offset<PlayerData>[data_size];
         int i = 0; 
-        foreach(CSteamID id in players.Keys){
-            ulong key_offset = ((ulong)id);
-            ushort value_offset = players[id];
-            PlayersData.StartPlayersData(builder);
-            PlayersData.AddSteamId(builder, key_offset);
-            PlayersData.AddPlayerId(builder, value_offset);
-            list[i] = PlayersData.EndPlayersData(builder);
+        foreach(PlayerLobbyData player in players){
+            PlayerData.StartPlayerData(builder);
+            PlayerData.AddSteamId(builder,(ulong) player.GetSteamID() );
+            PlayerData.AddPlayerId(builder, player.GetPlayerID() );
+            PlayerData.AddStatus(builder, (byte) player.GetPlayerConnectionStatus() );
+            list[i] = PlayerData.EndPlayerData(builder);
             i += 1; 
         }
-        VectorOffset dict_data = PlayersData.CreateSortedVectorOfPlayersData(builder, list);
-        PlayersDataDictionary.StartPlayersDataDictionary(builder);
-        PlayersDataDictionary.AddItems(builder, dict_data);
-        var stop_building = PlayersDataDictionary.EndPlayersDataDictionary(builder);
+        VectorOffset dict_data = PlayersData.CreateDataVector(builder, list);
+        PlayersData.StartPlayersData(builder);
+        PlayersData.AddData(builder, dict_data);
+        var stop_building = PlayersData.EndPlayersData(builder);
         builder.Finish(stop_building.Value);
         byte[] raw_packet = builder.SizedByteArray();
         byte[] packet = AssemblyPacket((byte) METHODS_ID.RECEIVE_PLAYERS, raw_packet);
@@ -90,21 +91,23 @@ public class LobbyPM : PacketManager{
 
 
     void ReceivePlayers(ByteBuffer buffer){
-        Dictionary<CSteamID,ushort> r_dict = new Dictionary<CSteamID, ushort>();
-        var table = PlayersDataDictionary.GetRootAsPlayersDataDictionary(buffer);
-        for(int i = 0; i < table.ItemsLength; i++){
-            PlayersData? entry = table.Items(i);
-            r_dict.Add((CSteamID) entry.Value.SteamId, entry.Value.PlayerId);
+        var table = PlayersData.GetRootAsPlayersData(buffer);
+        List<PlayerLobbyData> new_players = new List<PlayerLobbyData>();
+        for(int i = 0; i < table.DataLength; i++){
+            PlayerData? entry = table.Data(i);
+            PlayerLobbyData new_player = new PlayerLobbyData((CSteamID) entry.Value.SteamId, entry.Value.PlayerId);
+            new_player.SetPlayerConnectionStatus( (PlayerLobbyData.CONNECTION_STATE) entry.Value.Status);
+            new_players.Add(new_player);
         }
-        lobby_manager.SetPlayersData(r_dict);
+        lobby_manager.SetPlayersData(new_players);
     }
 
 
     public void SendRequestPlayers(CSteamID my_steam_id){
         FlatBufferBuilder builder = new FlatBufferBuilder(8);
-        LobbyPacket.data_requester.Startdata_requester(builder);
-        LobbyPacket.data_requester.AddPlayerId(builder, (ulong) my_steam_id);
-        var stop_building = LobbyPacket.data_requester.Enddata_requester(builder);
+        PlayerSteamID.StartPlayerSteamID(builder);
+        PlayerSteamID.AddSteamId(builder, (ulong) my_steam_id);
+        var stop_building = PlayerSteamID.EndPlayerSteamID(builder);
         builder.Finish(stop_building.Value);
         byte[] raw_packet = builder.SizedByteArray();
         byte[] packet = AssemblyPacket((byte) METHODS_ID.PLAYERS_REQUESTER, raw_packet);
@@ -113,21 +116,17 @@ public class LobbyPM : PacketManager{
 
 
     void ReceiveRequestPlayers(ByteBuffer buffer){
-        var table = LobbyPacket.data_requester.GetRootAsdata_requester(buffer);
-        Steamworks.CSteamID to_player_id = new CSteamID(table.PlayerId);
-        Dictionary<CSteamID, ushort> playerid_by_steamid = new Dictionary<CSteamID, ushort>();
-        foreach(PlayerLobbyData player in lobby_manager.GetPlayersData()){
-            playerid_by_steamid.Add(player.GetSteamID(), player.GetPlayerID() );
-        }
-        SendPlayers(playerid_by_steamid, to_player_id);
+        var table = PlayerSteamID.GetRootAsPlayerSteamID(buffer);
+        CSteamID to_player_id = new CSteamID(table.SteamId);
+        SendPlayers(lobby_manager.GetPlayersData(), to_player_id);
     }
 
 
     public void SendRegisterPlayer(CSteamID steam_id, ushort player_id){
         FlatBufferBuilder builder = new FlatBufferBuilder(8);
-        PlayersData.StartPlayersData(builder);
-        PlayersData.AddSteamId(builder,(ulong) steam_id);
-        PlayersData.AddPlayerId(builder, player_id);
+        PlayerData.StartPlayerData(builder);
+        PlayerData.AddSteamId(builder,(ulong) steam_id);
+        PlayerData.AddPlayerId(builder, player_id);
         var stop_building = PlayersData.EndPlayersData(builder);
         builder.Finish(stop_building.Value);
         byte[] raw_packet = builder.SizedByteArray();
@@ -137,8 +136,26 @@ public class LobbyPM : PacketManager{
 
 
     void ReceiveRegisterPlayer(ByteBuffer buffer){
-        var table = PlayersData.GetRootAsPlayersData(buffer);
+        var table = PlayerData.GetRootAsPlayerData(buffer);
         lobby_manager.RegisterPlayer((CSteamID) table.SteamId, table.PlayerId);
+    }
+
+
+    public void SendPlayerReady(CSteamID my_steam_id){
+        FlatBufferBuilder builder = new FlatBufferBuilder(8);
+        PlayerSteamID.StartPlayerSteamID(builder);
+        PlayerSteamID.AddSteamId(builder, (ulong) my_steam_id);
+        var stop_building = PlayerSteamID.EndPlayerSteamID(builder);
+        builder.Finish(stop_building.Value);
+        byte[] raw_packet = builder.SizedByteArray();
+        byte[] packet = AssemblyPacket((byte) METHODS_ID.PLAYER_LOBBY_READY, raw_packet);
+        network.SendReliableToAll(packet);
+    }
+
+
+    void ReceivePlayerReady(ByteBuffer buffer){
+        var table = PlayerData.GetRootAsPlayerData(buffer);
+        lobby_manager.SetPlayerConnectionReady((CSteamID) table.SteamId);
     }
 
 
@@ -156,6 +173,7 @@ public class LobbyPM : PacketManager{
         }
         lobby.StartGame();
     }
+
 
 
     public void SetLobby(Lobby _lobby){

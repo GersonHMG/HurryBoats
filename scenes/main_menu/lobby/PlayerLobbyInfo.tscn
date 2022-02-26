@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/main_menu/lobby/PlayerLobbyInfo.cs" type="Script" id=1]
 [ext_resource path="res://fonts/miniscoreboard.tres" type="DynamicFont" id=2]
 [ext_resource path="res://assets/steam/default_avatar.png" type="Texture" id=3]
+[ext_resource path="res://fonts/card_title.tres" type="DynamicFont" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 1, 1, 0.4 )
@@ -30,7 +31,7 @@ texture = ExtResource( 3 )
 
 [node name="PlayerName" type="Button" parent="."]
 margin_left = 188.0
-margin_right = 709.0
+margin_right = 594.0
 margin_bottom = 184.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 2 )
@@ -41,3 +42,12 @@ custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
 text = "Mojoncarnicero"
 align = 0
+
+[node name="Status" type="Label" parent="."]
+margin_left = 598.0
+margin_top = 76.0
+margin_right = 709.0
+margin_bottom = 107.0
+custom_colors/font_color = Color( 0.823529, 0, 0, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "Joining..."

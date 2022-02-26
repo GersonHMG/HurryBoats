@@ -9,67 +9,38 @@ using global::System;
 using global::System.Collections.Generic;
 using global::FlatBuffers;
 
-public struct data_requester : IFlatbufferObject
+public struct PlayerData : IFlatbufferObject
 {
   private Table __p;
   public ByteBuffer ByteBuffer { get { return __p.bb; } }
   public static void ValidateVersion() { FlatBufferConstants.FLATBUFFERS_2_0_0(); }
-  public static data_requester GetRootAsdata_requester(ByteBuffer _bb) { return GetRootAsdata_requester(_bb, new data_requester()); }
-  public static data_requester GetRootAsdata_requester(ByteBuffer _bb, data_requester obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
+  public static PlayerData GetRootAsPlayerData(ByteBuffer _bb) { return GetRootAsPlayerData(_bb, new PlayerData()); }
+  public static PlayerData GetRootAsPlayerData(ByteBuffer _bb, PlayerData obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
-  public data_requester __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
+  public PlayerData __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public ulong PlayerId { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUlong(o + __p.bb_pos) : (ulong)0; } }
+  public ulong SteamId { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUlong(o + __p.bb_pos) : (ulong)0; } }
+  public ushort PlayerId { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUshort(o + __p.bb_pos) : (ushort)0; } }
+  public byte Status { get { int o = __p.__offset(8); return o != 0 ? __p.bb.Get(o + __p.bb_pos) : (byte)0; } }
 
-  public static Offset<LobbyPackets.data_requester> Createdata_requester(FlatBufferBuilder builder,
-      ulong player_id = 0) {
-    builder.StartTable(1);
-    data_requester.AddPlayerId(builder, player_id);
-    return data_requester.Enddata_requester(builder);
+  public static Offset<LobbyPackets.PlayerData> CreatePlayerData(FlatBufferBuilder builder,
+      ulong steam_id = 0,
+      ushort player_id = 0,
+      byte status = 0) {
+    builder.StartTable(3);
+    PlayerData.AddSteamId(builder, steam_id);
+    PlayerData.AddPlayerId(builder, player_id);
+    PlayerData.AddStatus(builder, status);
+    return PlayerData.EndPlayerData(builder);
   }
 
-  public static void Startdata_requester(FlatBufferBuilder builder) { builder.StartTable(1); }
-  public static void AddPlayerId(FlatBufferBuilder builder, ulong playerId) { builder.AddUlong(0, playerId, 0); }
-  public static Offset<LobbyPackets.data_requester> Enddata_requester(FlatBufferBuilder builder) {
+  public static void StartPlayerData(FlatBufferBuilder builder) { builder.StartTable(3); }
+  public static void AddSteamId(FlatBufferBuilder builder, ulong steamId) { builder.AddUlong(0, steamId, 0); }
+  public static void AddPlayerId(FlatBufferBuilder builder, ushort playerId) { builder.AddUshort(1, playerId, 0); }
+  public static void AddStatus(FlatBufferBuilder builder, byte status) { builder.AddByte(2, status, 0); }
+  public static Offset<LobbyPackets.PlayerData> EndPlayerData(FlatBufferBuilder builder) {
     int o = builder.EndTable();
-    return new Offset<LobbyPackets.data_requester>(o);
-  }
-};
-
-public struct players : IFlatbufferObject
-{
-  private Table __p;
-  public ByteBuffer ByteBuffer { get { return __p.bb; } }
-  public static void ValidateVersion() { FlatBufferConstants.FLATBUFFERS_2_0_0(); }
-  public static players GetRootAsplayers(ByteBuffer _bb) { return GetRootAsplayers(_bb, new players()); }
-  public static players GetRootAsplayers(ByteBuffer _bb, players obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
-  public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
-  public players __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
-
-  public ulong List(int j) { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUlong(__p.__vector(o) + j * 8) : (ulong)0; }
-  public int ListLength { get { int o = __p.__offset(4); return o != 0 ? __p.__vector_len(o) : 0; } }
-#if ENABLE_SPAN_T
-  public Span<ulong> GetListBytes() { return __p.__vector_as_span<ulong>(4, 8); }
-#else
-  public ArraySegment<byte>? GetListBytes() { return __p.__vector_as_arraysegment(4); }
-#endif
-  public ulong[] GetListArray() { return __p.__vector_as_array<ulong>(4); }
-
-  public static Offset<LobbyPackets.players> Createplayers(FlatBufferBuilder builder,
-      VectorOffset listOffset = default(VectorOffset)) {
-    builder.StartTable(1);
-    players.AddList(builder, listOffset);
-    return players.Endplayers(builder);
-  }
-
-  public static void Startplayers(FlatBufferBuilder builder) { builder.StartTable(1); }
-  public static void AddList(FlatBufferBuilder builder, VectorOffset listOffset) { builder.AddOffset(0, listOffset.Value, 0); }
-  public static VectorOffset CreateListVector(FlatBufferBuilder builder, ulong[] data) { builder.StartVector(8, data.Length, 8); for (int i = data.Length - 1; i >= 0; i--) builder.AddUlong(data[i]); return builder.EndVector(); }
-  public static VectorOffset CreateListVectorBlock(FlatBufferBuilder builder, ulong[] data) { builder.StartVector(8, data.Length, 8); builder.Add(data); return builder.EndVector(); }
-  public static void StartListVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(8, numElems, 8); }
-  public static Offset<LobbyPackets.players> Endplayers(FlatBufferBuilder builder) {
-    int o = builder.EndTable();
-    return new Offset<LobbyPackets.players>(o);
+    return new Offset<LobbyPackets.PlayerData>(o);
   }
 };
 
@@ -83,81 +54,51 @@ public struct PlayersData : IFlatbufferObject
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
   public PlayersData __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public ulong SteamId { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUlong(o + __p.bb_pos) : (ulong)0; } }
-  public ushort PlayerId { get { int o = __p.__offset(6); return o != 0 ? __p.bb.GetUshort(o + __p.bb_pos) : (ushort)0; } }
+  public LobbyPackets.PlayerData? Data(int j) { int o = __p.__offset(4); return o != 0 ? (LobbyPackets.PlayerData?)(new LobbyPackets.PlayerData()).__assign(__p.__indirect(__p.__vector(o) + j * 4), __p.bb) : null; }
+  public int DataLength { get { int o = __p.__offset(4); return o != 0 ? __p.__vector_len(o) : 0; } }
 
   public static Offset<LobbyPackets.PlayersData> CreatePlayersData(FlatBufferBuilder builder,
-      ulong steam_id = 0,
-      ushort player_id = 0) {
-    builder.StartTable(2);
-    PlayersData.AddSteamId(builder, steam_id);
-    PlayersData.AddPlayerId(builder, player_id);
+      VectorOffset dataOffset = default(VectorOffset)) {
+    builder.StartTable(1);
+    PlayersData.AddData(builder, dataOffset);
     return PlayersData.EndPlayersData(builder);
   }
 
-  public static void StartPlayersData(FlatBufferBuilder builder) { builder.StartTable(2); }
-  public static void AddSteamId(FlatBufferBuilder builder, ulong steamId) { builder.AddUlong(0, steamId, 0); }
-  public static void AddPlayerId(FlatBufferBuilder builder, ushort playerId) { builder.AddUshort(1, playerId, 0); }
+  public static void StartPlayersData(FlatBufferBuilder builder) { builder.StartTable(1); }
+  public static void AddData(FlatBufferBuilder builder, VectorOffset dataOffset) { builder.AddOffset(0, dataOffset.Value, 0); }
+  public static VectorOffset CreateDataVector(FlatBufferBuilder builder, Offset<LobbyPackets.PlayerData>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
+  public static VectorOffset CreateDataVectorBlock(FlatBufferBuilder builder, Offset<LobbyPackets.PlayerData>[] data) { builder.StartVector(4, data.Length, 4); builder.Add(data); return builder.EndVector(); }
+  public static void StartDataVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(4, numElems, 4); }
   public static Offset<LobbyPackets.PlayersData> EndPlayersData(FlatBufferBuilder builder) {
     int o = builder.EndTable();
     return new Offset<LobbyPackets.PlayersData>(o);
   }
-
-  public static VectorOffset CreateSortedVectorOfPlayersData(FlatBufferBuilder builder, Offset<PlayersData>[] offsets) {
-    Array.Sort(offsets, (Offset<PlayersData> o1, Offset<PlayersData> o2) => builder.DataBuffer.GetUlong(Table.__offset(4, o1.Value, builder.DataBuffer)).CompareTo(builder.DataBuffer.GetUlong(Table.__offset(4, o2.Value, builder.DataBuffer))));
-    return builder.CreateVectorOfTables(offsets);
-  }
-
-  public static PlayersData? __lookup_by_key(int vectorLocation, ulong key, ByteBuffer bb) {
-    int span = bb.GetInt(vectorLocation - 4);
-    int start = 0;
-    while (span != 0) {
-      int middle = span / 2;
-      int tableOffset = Table.__indirect(vectorLocation + 4 * (start + middle), bb);
-      int comp = bb.GetUlong(Table.__offset(4, bb.Length - tableOffset, bb)).CompareTo(key);
-      if (comp > 0) {
-        span = middle;
-      } else if (comp < 0) {
-        middle++;
-        start += middle;
-        span -= middle;
-      } else {
-        return new PlayersData().__assign(tableOffset, bb);
-      }
-    }
-    return null;
-  }
 };
 
-public struct PlayersDataDictionary : IFlatbufferObject
+public struct PlayerSteamID : IFlatbufferObject
 {
   private Table __p;
   public ByteBuffer ByteBuffer { get { return __p.bb; } }
   public static void ValidateVersion() { FlatBufferConstants.FLATBUFFERS_2_0_0(); }
-  public static PlayersDataDictionary GetRootAsPlayersDataDictionary(ByteBuffer _bb) { return GetRootAsPlayersDataDictionary(_bb, new PlayersDataDictionary()); }
-  public static PlayersDataDictionary GetRootAsPlayersDataDictionary(ByteBuffer _bb, PlayersDataDictionary obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
+  public static PlayerSteamID GetRootAsPlayerSteamID(ByteBuffer _bb) { return GetRootAsPlayerSteamID(_bb, new PlayerSteamID()); }
+  public static PlayerSteamID GetRootAsPlayerSteamID(ByteBuffer _bb, PlayerSteamID obj) { return (obj.__assign(_bb.GetInt(_bb.Position) + _bb.Position, _bb)); }
   public void __init(int _i, ByteBuffer _bb) { __p = new Table(_i, _bb); }
-  public PlayersDataDictionary __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
+  public PlayerSteamID __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public LobbyPackets.PlayersData? Items(int j) { int o = __p.__offset(4); return o != 0 ? (LobbyPackets.PlayersData?)(new LobbyPackets.PlayersData()).__assign(__p.__indirect(__p.__vector(o) + j * 4), __p.bb) : null; }
-  public int ItemsLength { get { int o = __p.__offset(4); return o != 0 ? __p.__vector_len(o) : 0; } }
-  public LobbyPackets.PlayersData? ItemsByKey(ulong key) { int o = __p.__offset(4); return o != 0 ? LobbyPackets.PlayersData.__lookup_by_key(__p.__vector(o), key, __p.bb) : null; }
+  public ulong SteamId { get { int o = __p.__offset(4); return o != 0 ? __p.bb.GetUlong(o + __p.bb_pos) : (ulong)0; } }
 
-  public static Offset<LobbyPackets.PlayersDataDictionary> CreatePlayersDataDictionary(FlatBufferBuilder builder,
-      VectorOffset itemsOffset = default(VectorOffset)) {
+  public static Offset<LobbyPackets.PlayerSteamID> CreatePlayerSteamID(FlatBufferBuilder builder,
+      ulong steam_id = 0) {
     builder.StartTable(1);
-    PlayersDataDictionary.AddItems(builder, itemsOffset);
-    return PlayersDataDictionary.EndPlayersDataDictionary(builder);
+    PlayerSteamID.AddSteamId(builder, steam_id);
+    return PlayerSteamID.EndPlayerSteamID(builder);
   }
 
-  public static void StartPlayersDataDictionary(FlatBufferBuilder builder) { builder.StartTable(1); }
-  public static void AddItems(FlatBufferBuilder builder, VectorOffset itemsOffset) { builder.AddOffset(0, itemsOffset.Value, 0); }
-  public static VectorOffset CreateItemsVector(FlatBufferBuilder builder, Offset<LobbyPackets.PlayersData>[] data) { builder.StartVector(4, data.Length, 4); for (int i = data.Length - 1; i >= 0; i--) builder.AddOffset(data[i].Value); return builder.EndVector(); }
-  public static VectorOffset CreateItemsVectorBlock(FlatBufferBuilder builder, Offset<LobbyPackets.PlayersData>[] data) { builder.StartVector(4, data.Length, 4); builder.Add(data); return builder.EndVector(); }
-  public static void StartItemsVector(FlatBufferBuilder builder, int numElems) { builder.StartVector(4, numElems, 4); }
-  public static Offset<LobbyPackets.PlayersDataDictionary> EndPlayersDataDictionary(FlatBufferBuilder builder) {
+  public static void StartPlayerSteamID(FlatBufferBuilder builder) { builder.StartTable(1); }
+  public static void AddSteamId(FlatBufferBuilder builder, ulong steamId) { builder.AddUlong(0, steamId, 0); }
+  public static Offset<LobbyPackets.PlayerSteamID> EndPlayerSteamID(FlatBufferBuilder builder) {
     int o = builder.EndTable();
-    return new Offset<LobbyPackets.PlayersDataDictionary>(o);
+    return new Offset<LobbyPackets.PlayerSteamID>(o);
   }
 };
 
