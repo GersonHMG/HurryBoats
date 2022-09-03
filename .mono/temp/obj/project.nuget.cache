@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "d1230fc9JSm0JRLWIpLF9kN8rBYApLP5ksjkbYWuShNvu1aFpYmwcJKtVNA2peKv5PghjSrLC+9k+Ont6bFhbA==",
+  "dgSpecHash": "lnmEfmZ/R+QnEyp0wsU1VGBBIbGPqYbwbzlTphQpSmKzUntSraeLJErGyjzCC0bbsnaHXZfBB/RTp8Zmy0MCXw==",
   "success": true,
-  "projectFilePath": "D:\\Personal\\GodotProyects\\TheCircle\\The Circle.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Gerson\\Projects\\HurryBoats\\HurryBoats.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Gerson\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.2\\microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "C:\\Users\\Gerson\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.2\\microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -1,0 +1,2 @@
+﻿59288
+C:/Users/Gerson/Projects/Godot/Godot_v3.5-stable_mono_win64.exe
