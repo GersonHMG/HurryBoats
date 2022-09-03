@@ -1,0 +1,9 @@
+C:\Users\Gerson\Projects\HurryBoats\.mono\temp\bin\ExportDebug\HurryBoats.dll
+C:\Users\Gerson\Projects\HurryBoats\.mono\temp\bin\ExportDebug\HurryBoats.pdb
+C:\Users\Gerson\Projects\HurryBoats\.mono\temp\obj\ExportDebug\HurryBoats.csproj.AssemblyReference.cache
+C:\Users\Gerson\Projects\HurryBoats\.mono\temp\obj\ExportDebug\HurryBoats.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Gerson\Projects\HurryBoats\.mono\temp\obj\ExportDebug\HurryBoats.AssemblyInfoInputs.cache
+C:\Users\Gerson\Projects\HurryBoats\.mono\temp\obj\ExportDebug\HurryBoats.AssemblyInfo.cs
+C:\Users\Gerson\Projects\HurryBoats\.mono\temp\obj\ExportDebug\HurryBoats.csproj.CoreCompileInputs.cache
+C:\Users\Gerson\Projects\HurryBoats\.mono\temp\obj\ExportDebug\HurryBoats.dll
+C:\Users\Gerson\Projects\HurryBoats\.mono\temp\obj\ExportDebug\HurryBoats.pdb

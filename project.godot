@@ -13,7 +13,8 @@ config_version=4
 config/name="HurryBoats"
 config/description="Made by GM."
 run/main_scene="res://scenes/main_menu/MainMenu.tscn"
-config/icon="res://icon.png"
+config/icon="res://assets/boats/default_boat.png"
+config/windows_native_icon="res://default_boat.ico"
 
 [autoload]
 
@@ -27,7 +28,6 @@ Network="*res://network/Network.tscn"
 window/size/width=1920
 window/size/height=1080
 window/size/resizable=false
-window/size/fullscreen=true
 window/dpi/allow_hidpi=true
 window/per_pixel_transparency/allowed=true
 window/stretch/mode="2d"
