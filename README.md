@@ -1,6 +1,6 @@
 # HurryBoats (Prototype)
 
-![alt text]([readme\Godot2022.09.02.jpg](https://github.com/MasterGerson/HurryBoats/blob/master/readme/Godot2022.09.02.jpg))
+![alt text](https://github.com/MasterGerson/HurryBoats/blob/master/readme/Godot2022.09.02.jpg?raw=true)
 
 
 This is a (2-4) peer-to-peer game, where you are driving
