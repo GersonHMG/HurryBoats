@@ -1,6 +1,7 @@
 # HurryBoats (Prototype)
 
-![image info](readme\Godot2022.09.02.jpg)
+![alt text](https://github.com/MasterGerson/HurryBoats/blob/master/readme/Godot2022.09.02.jpg?raw=true)
+
 
 This is a (2-4) peer-to-peer game, where you are driving
 a boat and your goal is to be the last one alive. Pick the cannonball crates and defeat the other players. Try to avoid the edge of the map and the cannonballs from another players, otherwise you will lose.
