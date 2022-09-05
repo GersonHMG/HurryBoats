@@ -19,6 +19,6 @@ a boat and your goal is to be the last one alive. Pick the cannonball crates and
 
 # Intructions
 
-To debug this project you have to change in your editor settings the build:
+To debug this project you have to change in your editor settings:
 
 Editor -> Editor Settings -> Mono -> Build -> change to dotcli.
