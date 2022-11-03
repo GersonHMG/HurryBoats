@@ -2,23 +2,22 @@
 
 ![alt text](https://github.com/MasterGerson/HurryBoats/blob/master/readme/Godot2022.09.02.jpg?raw=true)
 
+Drive your boat to collect ammo crates and destroy your enemies.
+This is a multiplayer game and need steam in order to play.
 
-This is a (2-4) peer-to-peer game, where you are driving
-a boat and your goal is to be the last one alive. Pick the cannonball crates and defeat the other players. Try to avoid the edge of the map and the cannonballs from another players, otherwise you will lose.
+## Controls
 
-# Controls
+- Select ammo: Q and E
+- Shoot key: SPACE
+- Move keys: W A S D
 
-- Select your ammunition with Q and E
-- Shoot your current ammmo with SPACE
-- Move with WASD
 
-# Requirements
+# How to run
+
+To run the project, simply clone the repo and import it from the Godot c# editor, or just download the executable in [releases](https://github.com/Gerssonn/HurryBoats/tags).
+
+
+## Requirements  
 - Godot 3.5 mono version (c# support)
 - Steam open
 - .Net SDK 4.7.2 
-
-# Intructions
-
-To debug this project you have to change in your editor settings:
-
-Editor -> Editor Settings -> Mono -> Build -> change to dotcli.
