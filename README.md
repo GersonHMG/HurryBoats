@@ -14,7 +14,7 @@ This is a multiplayer game and need steam in order to play.
 
 # How to run
 
-To run the project, simply clone the repo and import it from the Godot c# editor, or just download the executable in [releases](https://github.com/Gerssonn/HurryBoats/tags).
+To run the project, simply clone the repo and import it from the Godot c# editor, or just download the executable in [releases](https://github.com/Gerssonn/HurryBoats/releases).
 
 
 ## Requirements  
