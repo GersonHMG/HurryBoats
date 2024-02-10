@@ -1,4 +1,5 @@
 # HurryBoats (Prototype)
+Video preview: https://www.youtube.com/watch?v=t4ebcABR8lQ
 
 ![alt text](https://github.com/MasterGerson/HurryBoats/blob/master/readme/Godot2022.09.02.jpg?raw=true)
 
